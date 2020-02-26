@@ -1,11 +1,28 @@
+require 'pry'
 class Student
   attr_accessor :id, :name, :grade
-
+    
+    def initialize
+        @name = name
+        @grade =grade
+        @id = id 
+    end 
+  
   def self.new_from_db(row)
+      student = self.new 
+      student.id = row[0]
+      student.name = row[1]
+      student.grade = row[2]
     # create a new Student object given a row from the database
   end
 
   def self.all
+      sql = <<-SQL
+            SELECT * FROM songs 
+            SQL
+            DB[:conn].execute(sql).map do |row|
+              self.new_from_db(row)
+            end 
     # retrieve all the rows from the "Students" database
     # remember each row should be a new instance of the Student class
   end
